@@ -1,0 +1,16 @@
+{
+  "stack": "vite-react-zod",
+  "version": "1.0",
+  "scripts": {
+    "dev": "npm run dev",
+    "typecheck": "npm run typecheck",
+    "lint": "npm run lint",
+    "build": "npm run build"
+  },
+  "qualityGates": ["typecheck", "lint", "build"],
+  "dataLayer": "none",
+  "apiPattern": "fetch-api",
+  "validationPattern": "zod",
+  "allowedLibraries": ["zod", "shadcn-ui", "lucide-react", "react-router-dom"],
+  "forbiddenPatterns": ["raw fetch in component without error handling", "any type assertions"]
+}
