@@ -1,0 +1,7 @@
+{
+  "name": "agentcode-monorepo-template",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ]
+}
