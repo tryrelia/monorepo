@@ -11,7 +11,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { Converter } = require('openapi-to-postmanv2');
+const Converter = require('openapi-to-postmanv2');
 
 const PREVIEW_URL_FILE = path.join(__dirname, '..', '.preview-url');
 
