@@ -1,26 +1,28 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { getItems, type Item } from "@/lib/store";
 import { CreateItemSchema } from "@/lib/validations";
 
 export async function GET() {
-  try {
-    const items = await prisma.item.findMany({ orderBy: { createdAt: "desc" } });
-    return NextResponse.json(items);
-  } catch {
-    return NextResponse.json({ error: "Failed to fetch items" }, { status: 500 });
-  }
+  const items = getItems()
+    .slice()
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return NextResponse.json(items);
 }
 
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const parsed = CreateItemSchema.safeParse(body);
-    if (!parsed.success) {
-      return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
-    }
-    const item = await prisma.item.create({ data: parsed.data });
-    return NextResponse.json(item, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "Failed to create item" }, { status: 500 });
+  const body = await request.json();
+  const parsed = CreateItemSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
+  const now = new Date().toISOString();
+  const item: Item = {
+    id: crypto.randomUUID(),
+    title: parsed.data.title,
+    done: false,
+    createdAt: now,
+    updatedAt: now,
+  };
+  getItems().push(item);
+  return NextResponse.json(item, { status: 201 });
 }
