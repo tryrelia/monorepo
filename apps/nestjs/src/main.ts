@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { SWAGGER_CUSTOM_CSS, SWAGGER_THEME_JS } from './swagger-theme';
 import { execFile } from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -15,7 +16,18 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    customSiteTitle: 'NestJS API — Docs',
+    customCss: SWAGGER_CUSTOM_CSS,
+    customJsStr: SWAGGER_THEME_JS,
+    swaggerOptions: {
+      docExpansion: 'list',
+      filter: true,
+      displayRequestDuration: true,
+      persistAuthorization: true,
+      tryItOutEnabled: true,
+    },
+  });
 
   const port = parseInt(process.env.PORT ?? '3001', 10);
 
