@@ -1,4 +1,6 @@
-export default function App() {
+import { Routes, Route } from 'react-router-dom';
+
+function Home() {
   return (
     <div className="min-h-screen bg-canvas flex items-center justify-center p-6 selection:bg-primary selection:text-on-primary">
       <div className="text-center">
@@ -13,3 +15,10 @@ export default function App() {
   )
 }
 
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  )
+}
