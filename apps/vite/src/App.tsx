@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import NotFound from '@/pages/NotFound';
 
 function Home() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   )
 }
